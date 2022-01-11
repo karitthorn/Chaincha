@@ -1,0 +1,65 @@
+{% extends "bootstrap/base.html" %}
+ {% import "bootstrap/wtf.html" as wtf %} 
+ {%include "layout.html" %} 
+ {% block title%} create cryptocurrency {% endblock %}
+
+{%block content%}
+    <div class="container my-2">
+      {%for message in get_flashed_messages() %}
+      <div class="alert alert-success" role="alert">{{message}}</div>
+    
+      {% endfor %}{{wtf.quick_form(form)}}
+      <a href="/policycrypto">policy Here*</a>
+      <hr>
+    {% if name %}
+    <p class="font-monospace">
+    pragma solidity ^0.8.2;<br>
+    <br>
+    contract Token {<br>
+        mapping(address => uint) public balances;<br>
+        mapping(address => mapping(address => uint)) public allowance;<br>
+        uint public totalSupply = {{session['totalsupply']}} * 10 ** 18;<br>
+        string public name = "{{session['name']}}";<br>
+        string public symbol = "{{session['symbol']}}";<br>
+        uint public decimals = "{{session['decimals']}}" ;<br>
+        <br>
+        event Transfer(address indexed from, address indexed to, uint value);<br>
+        event Approval(address indexed owner, address indexed spender, uint value);<br>
+        <br>
+        constructor() {<br>
+            balances[msg.sender] = totalSupply;<br>
+        }<br>
+        <br>
+        function balanceOf(address owner) public returns(uint) {<br>
+            return balances[owner];<br>
+        }<br>
+        <br>
+        function transfer(address to, uint value) public returns(bool) {<br>
+            require(balanceOf(msg.sender) >= value, 'balance too low');<br>
+            balances[to] += value;<br>
+            balances[msg.sender] -= value;<br>
+           emit Transfer(msg.sender, to, value);<br>
+            return true;<br>
+        }<br>
+        <br>
+        function transferFrom(address from, address to, uint value) public returns(bool) {<br>
+            require(balanceOf(from) >= value, 'balance too low');<br>
+            require(allowance[from][msg.sender] >= value, 'allowance too low');<br>
+            balances[to] += value;<br>
+            balances[from] -= value;<br>
+            emit Transfer(from, to, value);<br>
+            return true;   <br>
+        }<br>
+        
+        function approve(address spender, uint value) public returns (bool) {<br>
+            allowance[msg.sender][spender] = value;<br>
+            emit Approval(msg.sender, spender, value);<br>
+            return true;   <br>
+        }<br>
+    }<br>
+</p>
+    <hr>
+    {% else %}
+    Your code will be here
+    {% endif %}
+{% endblock %}

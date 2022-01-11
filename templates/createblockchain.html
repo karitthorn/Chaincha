@@ -1,0 +1,40 @@
+{% extends "bootstrap/base.html" %} {% import "bootstrap/wtf.html" as wtf %} {%
+include "layout.html" %} {% block title%} create blockchain {% endblock %} {%
+block content%}
+<div class="container my-2">
+  {%for message in get_flashed_messages() %}
+  <div class="alert alert-success" role="alert">{{message}}</div>
+
+  {% endfor %} {{wtf.quick_form(form)}}
+  <a href="/policy">policy Here*</a>
+  <hr />
+  
+  <!-- ------------------------------------------------ -->
+  <h1>
+    <p class="fw-bolder">How can I see my blockchain</p>
+  </h1>
+  <br />
+  <p class="fs-2">
+    You can see you blockchain
+    <a href="/get_chain">Here(API)</a>
+  </p>
+  <br />
+  <hr>
+  <h1>
+    <p class="fw-bolder">Check this blockchain is save!!</p>
+  </h1>
+  <p class="fs-2">
+    Check it is valid
+    <a href="/is_valid">Here(API)</a>
+  </p>
+  <br />
+
+  <!-- #-------------------------------------/ -->
+  <script>
+    const btn = document.querySelector(".btn.btn-default");
+    btn.classList.remove("btn-default");
+    btn.classList.add("btn-success");
+    console.log(btn);
+  </script>
+</div>
+{% endblock %}
