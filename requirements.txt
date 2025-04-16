@@ -14,7 +14,7 @@ greenlet==1.1.1
 idna==3.2
 itsdangerous==2.0.1
 Jinja2==3.0.1
-Mako==1.1.5
+Mako==1.2.2
 MarkupSafe==2.0.1
 pycparser==2.20
 python-dateutil==2.8.2
